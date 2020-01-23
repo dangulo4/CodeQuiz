@@ -38,8 +38,6 @@ btnDiv.appendChild(startBtnEl);
 body.appendChild(btnDiv);
 btnDiv.appendChild(linebreak);
 
-
-
 //Style elements
 infoEl.setAttribute('style','margin:auto; width:100%; text-align:left;');
 linkEl.setAttribute('href','https://www.google.com');
@@ -61,8 +59,15 @@ startBtnEl.addEventListener('click', function() {
   startQuiz();
 });
 
+nextBtnEl.addEventListener('click', function() {
+  currentQuestionIndex++;
+  setNextQuestion()
+  // showQuestions(shuffledQuestions[currentQuestionIndex]);
+});
+
 function startQuiz() {
   console.log('The game has started');
+
   
   shuffledQuestions = quizQuestions.sort(() => Math.random() - .5)
   currentQuestionIndex = 0;
@@ -78,47 +83,74 @@ function startQuiz() {
     nextBtnDiv.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
     nextBtnEl.setAttribute('id', 'nextBtn');
     nextBtnEl.innerHTML = 'Next';
+    resetState();
     showQuestions(shuffledQuestions[currentQuestionIndex]);
+  }
+
+  function resetState() {
+    clearStatusClass(document.body);
+    nextBtnEl.style.display='none';
+    while(answerButtonsElement.firstChild) {
+      answerButtonsElement.removeChild
+      (answerButtonsElement.firstChild)
+    }
   }
 
   function showQuestions(quizQuestions) {
     body.appendChild(questionContainer);
     questionContainer.appendChild(questionsEl);
     questionsEl.textContent = quizQuestions.question;
-
     
     quizQuestions.answers.forEach(answer => {
-    
       var button = document.createElement('button')
       button.innerText = answer.text
-      button.classList.add('answer')
+      //button.classList.add('answer')
         if (answer.correct) {
           button.dataset.correct = answer.correct
         }
       button.addEventListener('click', selectAnswer)
       body.appendChild(answerButtonsElement);
-      answerButtonsElement.appendChild(answersEl);
-      //answerButtonsElement.textContent = quizQuestions.answers;
+      //answerButtonsElement.appendChild(answersEl);
       answerButtonsElement.appendChild(button);
-      
-     
-     
-    })
+  })
   
     console.log(questionsEl.innerText);
     console.log(answerButtonsElement.innerText);
   }
  
   function selectAnswer(e) {
-
+    var selectedButton = e.target
+    var correct = selectedButton.dataset.correct
+    setStatusClass(document.body, correct)
+    Array.from(answerButtonsElement.children).forEach(button => {
+      setStatusClass(button, button.dataset.correct)
+      })
+      if(shuffledQuestions.length > currentQuestionIndex +1) {
+      nextBtnEl.style.display='block';
+  } else {
+    startBtnEl.innerText = 'Restart';
+    startBtnEl.style.display='block';
+    }
   }
 
-      nextBtnEl.addEventListener('click', function() {
-        currentQuestionIndex++;
-          //resetOrder()
-          showQuestions(shuffledQuestions[currentQuestionIndex]);
-          
-        });
+  function setStatusClass(element, correct) {
+    clearStatusClass(element)
+    if (correct) {
+      element.classList.add('correct');
+      console.log('The answer is correct');
+      } else {
+        element.classList.add('wrong');
+        console.log('The wrong answer is selected');
+      }
+  }
+
+  function clearStatusClass(element) {
+    element.classList.remove('correct')
+    element.classList.remove('wrong')
+  }
+
+  
+    
        // function resetOrder() {
         //clearStatusClass(document.body)
         //nextBtnEl.classList.add('hide')
