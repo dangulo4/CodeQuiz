@@ -10,13 +10,14 @@ var h2El        = document.createElement('h2');
 var btnDiv     = document.createElement('div');
 var startBtnEl  = document.createElement('button');
 var questionContainer = document.createElement('div');
+var answerContainer = document.createElement('div');
 var questionsEl = document.createElement('p');
+var answersEl = document.createElement('p');
 var linebreak = document.createElement("br");
 var shuffledQuestions;
 var currentQuestionIndex;
-//var answerButtonsElement = document.getElementById('answer-buttons');
 var nextBtnEl = document.createElement('button');
-
+var answerButtonsElement = document.createElement('button');
 
 //Store elements in variables
 linkEl.innerHTML    = 'View High Scores';
@@ -24,7 +25,7 @@ timerEl.textContent = 'Time + 0';
 h1El.textContent    = 'Coding Quiz Chanllenge';
 h2El.textContent    = 'Try to answer the code related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by 10 seconds!';
 startBtnEl.innerHTML = 'Start';
-questionsEl.textContent  = 'This is where the questions go';
+
 
 //Append all elements
 body.appendChild(infoEl);
@@ -48,18 +49,17 @@ h2El.setAttribute('style', 'margin:auto; width:100%; text-align:center');
 btnDiv.setAttribute('style','margin:auto; width:100%; text-align:center;');
 startBtnEl.setAttribute('id', 'startBtn');
 btnDiv.setAttribute('style','margin:auto; width:100%; text-align:center;');
-questionsEl.setAttribute('id', 'questions', 'style', 'margin:auto; width:100%; text-align:center;');
+questionsEl.setAttribute('id', 'question', 'style', 'margin:auto; width:100%; text-align:center;');
 questionsEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
-
-     
+answersEl.setAttribute('id', 'answers', 'style', 'margin:auto; width:100%; text-align:center;');
+answersEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
+answerButtonsElement.setAttribute('class','btn;');     
 //document.getElementById('questions').style.display='none';
 
 startBtnEl.addEventListener('click', function() {
   document.getElementById("startBtn").style.display="none";
   startQuiz();
 });
-
-
 
 function startQuiz() {
   console.log('The game has started');
@@ -85,9 +85,33 @@ function startQuiz() {
     body.appendChild(questionContainer);
     questionContainer.appendChild(questionsEl);
     questionsEl.textContent = quizQuestions.question;
+
+    
+    quizQuestions.answers.forEach(answer => {
+    
+      var button = document.createElement('button')
+      button.innerText = answer.text
+      button.classList.add('answer')
+        if (answer.correct) {
+          button.dataset.correct = answer.correct
+        }
+      button.addEventListener('click', selectAnswer)
+      body.appendChild(answerButtonsElement);
+      answerButtonsElement.appendChild(answersEl);
+      //answerButtonsElement.textContent = quizQuestions.answers;
+      answerButtonsElement.appendChild(button);
+      
+     
+     
+    })
+  
     console.log(questionsEl.innerText);
- }
-       
+    console.log(answerButtonsElement.innerText);
+  }
+ 
+  function selectAnswer(e) {
+
+  }
 
       nextBtnEl.addEventListener('click', function() {
         currentQuestionIndex++;
@@ -95,13 +119,13 @@ function startQuiz() {
           showQuestions(shuffledQuestions[currentQuestionIndex]);
           
         });
-        // function resetOrder() {
-        // //clearStatusClass(document.body)
-        // nextBtnEl.classList.add('hide')
-        // while (answerButtonsElement.firstChild) {
-        //   answerButtonsElement.removeChild(answerButtonsElement.firstChild)
-        // }
-    // }
+       // function resetOrder() {
+        //clearStatusClass(document.body)
+        //nextBtnEl.classList.add('hide')
+       // while (answerButtonsElement.firstChild) {
+        //  answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+       // }
+   // }
      
 var quizQuestions = [
   {
