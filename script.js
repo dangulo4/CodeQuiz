@@ -2,7 +2,6 @@
 var body = document.body;
 
 // Create all the necessary elements
-
 var infoEl      = document.createElement('div');
 var linkEl      = document.createElement('a');  
 var timerEl     = document.createElement('p');
@@ -13,19 +12,19 @@ var startBtnEl  = document.createElement('button');
 var questionContainer = document.createElement('div');
 var questionsEl = document.createElement('p');
 var linebreak = document.createElement("br");
+var shuffledQuestions;
+var currentQuestionIndex;
+//var answerButtonsElement = document.getElementById('answer-buttons');
+var nextBtnEl = document.createElement('button');
 
 
 //Store elements in variables
-
 linkEl.innerHTML    = 'View High Scores';
 timerEl.textContent = 'Time + 0';     
 h1El.textContent    = 'Coding Quiz Chanllenge';
 h2El.textContent    = 'Try to answer the code related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by 10 seconds!';
 startBtnEl.innerHTML = 'Start';
 questionsEl.textContent  = 'This is where the questions go';
-
-
-// document.body.appendChild(anchorElem); // append your new link to the bod
 
 //Append all elements
 body.appendChild(infoEl);
@@ -37,8 +36,7 @@ body.appendChild(btnDiv);
 btnDiv.appendChild(startBtnEl);
 body.appendChild(btnDiv);
 btnDiv.appendChild(linebreak);
-body.appendChild(questionContainer);
-questionContainer.appendChild(questionsEl);
+
 
 
 //Style elements
@@ -53,82 +51,93 @@ btnDiv.setAttribute('style','margin:auto; width:100%; text-align:center;');
 questionsEl.setAttribute('id', 'questions', 'style', 'margin:auto; width:100%; text-align:center;');
 questionsEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
 
-document.getElementById('questions').style.display='none';
+     
+//document.getElementById('questions').style.display='none';
 
 startBtnEl.addEventListener('click', function() {
-    console.log('The game has started');
-    document.getElementById("startBtn").style.display="none";
-    startQuiz();
+  document.getElementById("startBtn").style.display="none";
+  startQuiz();
 });
 
+
+
 function startQuiz() {
-  startBtnEl.classList.add('hide')
-  document.getElementById('questions').style.display='block';
-   
-   currentQuestionIndex = 0
+  console.log('The game has started');
+  
+  shuffledQuestions = quizQuestions.sort(() => Math.random() - .5)
+  currentQuestionIndex = 0;
 // questionContainerElement.classList.remove('hide')
-  showQuestions(quizQuestions, questionsEl);
-
-    function showQuestions(quizQuestions, questionsEl) {
-    var output = [];
-    var answers;
-        for(var i = 0; i < quizQuestions.length; i++) {
-            answers = [];
-            for(letter in quizQuestions[i].answers){
-
-              //push out the 
-              answers.push(
-                '<label>'
-                  + '<input  type="radio" name=" question' +i+ '">'
-                  + letter + ': '
-                  + quizQuestions[i].answers[letter]
-                + '</label>');
-            }
-        
-            // add this question and its answers to the output
-            output.push(
-              '<div class="question">' + quizQuestions[i].question + '</div>'
-              + '<div class="answers">' + answers.join(' ') + '</div>');
-             
-          }
-          questionsEl.innerHTML = output.join('');
-          var nextBtnDiv     = document.createElement('div');
-          var nextBtnEl  = document.createElement('button');
-          body.appendChild(nextBtnDiv);
-          nextBtnDiv.appendChild(nextBtnEl);
-          nextBtnDiv.setAttribute('style','margin:auto; width:100%; text-align:center;');
-          nextBtnEl.setAttribute('id', 'nextBtn');
-          nextBtnEl.innerHTML = 'Next';
-    
-      }
+  // showQuestions(quizQuestions, questionsEl);
+  setNextQuestion();
+  //startBtnEl.classList.add('hide')
 }
+  function setNextQuestion() {
+    var nextBtnDiv = document.createElement('div');
+    body.appendChild(nextBtnDiv);
+    nextBtnDiv.appendChild(nextBtnEl);
+    nextBtnDiv.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
+    nextBtnEl.setAttribute('id', 'nextBtn');
+    nextBtnEl.innerHTML = 'Next';
+    showQuestions(shuffledQuestions[currentQuestionIndex]);
+  }
 
- var quizQuestions = [
-    {
-      question: 'What can be broken, but never held?',
-      answers: {
-        a: '  Air',
-        b: '  Glass',
-        c: '  A promise'
-      },
-      correctAnswer: 'c'
-    },
-    {
-      question: 'What can one catch that nothing is thrown?',
-      answers: {
-        a: '  A kite',
-        b: '  A cold',
-        c: '  The solar system'
-      },
-      correctAnswer: 'b'
-    },
-    {
-      question: 'What is always coming, but never arrives?',
-      answers: {
-        a: 'Tomorrow',
-        b: 'Undefined',
-        c: 'A clock'
-      },
-      correctAnswer: 'a'
-    }
-  ];
+  function showQuestions(quizQuestions) {
+    body.appendChild(questionContainer);
+    questionContainer.appendChild(questionsEl);
+    questionsEl.textContent = quizQuestions.question;
+    console.log(questionsEl.innerText);
+ }
+       
+
+      nextBtnEl.addEventListener('click', function() {
+        currentQuestionIndex++;
+          //resetOrder()
+          showQuestions(shuffledQuestions[currentQuestionIndex]);
+          
+        });
+        // function resetOrder() {
+        // //clearStatusClass(document.body)
+        // nextBtnEl.classList.add('hide')
+        // while (answerButtonsElement.firstChild) {
+        //   answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+        // }
+    // }
+     
+var quizQuestions = [
+  {
+    question: 'What can be broken, but never held?',
+    answers: [
+      { text: 'A promise', correct: true },
+      { text: 'Bubbles', correct: false },
+      { text: 'Accounts', correct: false }
+    ]
+  },
+  {
+    question: 'What can one catch that nothing is thrown?',
+    answers: [
+      { text: 'A cold', correct: true },
+      { text: 'The wind', correct: true },
+      { text: 'Waves', correct: true },
+      { text: 'Common Sense', correct: false }
+    ]
+  },
+  {
+    question: 'What is always coming, but never arrives?',
+    answers: [
+      { text: 'The sun', correct: false },
+      { text: 'Tomorrow', correct: true },
+      { text: 'Trains', correct: false },
+      { text: 'Knowledge', correct: false }
+    ]
+  },
+  {
+    question: 'How many functions exist in JavaScript?',
+    answers: [
+      { text: '6', correct: false },
+      { text: '69', correct: false },
+      { text: 'Alot', correct: false },
+      { text: 'I dont know', correct: true }
+    ]
+  }
+];
+
