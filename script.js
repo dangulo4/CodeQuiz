@@ -5,8 +5,6 @@ var body = document.body;
 var infoEl      = document.createElement('div');
 var linkEl      = document.createElement('a');  
 var timerEl     = document.createElement('p');
-var h1El        = document.createElement('h1');
-var h2El        = document.createElement('h2');
 var btnDiv     = document.createElement('div');
 var startBtnEl  = document.createElement('button');
 var questionContainer = document.createElement('div');
@@ -18,21 +16,17 @@ var shuffledQuestions;
 var currentQuestionIndex;
 var nextBtnEl = document.createElement('button');
 var answerButtonsElement = document.createElement('button');
+var instructionsEl = document.getElementById('instructions')
 
 //Store elements in variables
 linkEl.innerHTML    = 'View High Scores';
 timerEl.textContent = 'Time + 0';     
-h1El.textContent    = 'Coding Quiz Chanllenge';
-h2El.textContent    = 'Try to answer the code related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by 10 seconds!';
 startBtnEl.innerHTML = 'Start';
-
 
 //Append all elements
 body.appendChild(infoEl);
 infoEl.appendChild(linkEl);
 infoEl.appendChild(timerEl);
-body.appendChild(h1El);
-body.appendChild(h2El);
 body.appendChild(btnDiv);
 btnDiv.appendChild(startBtnEl);
 body.appendChild(btnDiv);
@@ -42,8 +36,6 @@ btnDiv.appendChild(linebreak);
 infoEl.setAttribute('style','margin:auto; width:100%; text-align:left;');
 linkEl.setAttribute('href','https://www.google.com');
 timerEl.setAttribute('style', 'margin:auto; width:100%; text-align:right;');
-h1El.setAttribute('style', 'margin:auto; width:50%; text-align:center;');
-h2El.setAttribute('style', 'margin:auto; width:100%; text-align:center');
 btnDiv.setAttribute('style','margin:auto; width:100%; text-align:center;');
 startBtnEl.setAttribute('id', 'startBtn');
 btnDiv.setAttribute('style','margin:auto; width:100%; text-align:center;');
@@ -52,30 +44,25 @@ questionsEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;')
 answersEl.setAttribute('id', 'answers', 'style', 'margin:auto; width:100%; text-align:center;');
 answersEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
 answerButtonsElement.setAttribute('class','btn;');     
-//document.getElementById('questions').style.display='none';
+
 
 startBtnEl.addEventListener('click', function() {
   document.getElementById("startBtn").style.display="none";
+  instructionsEl.style.diplay='none';
   startQuiz();
 });
 
 nextBtnEl.addEventListener('click', function() {
   currentQuestionIndex++;
   setNextQuestion()
-  // showQuestions(shuffledQuestions[currentQuestionIndex]);
-});
+ });
 
 function startQuiz() {
   console.log('The game has started');
-
-  
   shuffledQuestions = quizQuestions.sort(() => Math.random() - .5)
   currentQuestionIndex = 0;
-// questionContainerElement.classList.remove('hide')
-  // showQuestions(quizQuestions, questionsEl);
   setNextQuestion();
-  //startBtnEl.classList.add('hide')
-}
+ }
   function setNextQuestion() {
     var nextBtnDiv = document.createElement('div');
     body.appendChild(nextBtnDiv);
@@ -83,6 +70,7 @@ function startQuiz() {
     nextBtnDiv.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
     nextBtnEl.setAttribute('id', 'nextBtn');
     nextBtnEl.innerHTML = 'Next';
+    
     resetState();
     showQuestions(shuffledQuestions[currentQuestionIndex]);
   }
@@ -127,9 +115,11 @@ function startQuiz() {
       })
       if(shuffledQuestions.length > currentQuestionIndex +1) {
       nextBtnEl.style.display='block';
+      nextBtnEl.setAttribute('style', 'margin:auto; text-align:center;');
   } else {
     startBtnEl.innerText = 'Restart';
     startBtnEl.style.display='block';
+    startBtnEl.setAttribute('style', 'margin:auto; text-align:center;');
     }
   }
 
@@ -148,17 +138,7 @@ function startQuiz() {
     element.classList.remove('correct')
     element.classList.remove('wrong')
   }
-
-  
-    
-       // function resetOrder() {
-        //clearStatusClass(document.body)
-        //nextBtnEl.classList.add('hide')
-       // while (answerButtonsElement.firstChild) {
-        //  answerButtonsElement.removeChild(answerButtonsElement.firstChild)
-       // }
-   // }
-     
+// Question Object     
 var quizQuestions = [
   {
     question: 'What can be broken, but never held?',

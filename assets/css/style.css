@@ -1,22 +1,37 @@
 
 *, *::before, *::after {
     box-sizing: border-box;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: arial;
   }
 
-  body {
-    padding: 0;
-    margin: 0;
-   
-   
-   
-    justify-content: center;
-    align-items: center;
-  
-  
-  }
+body {
+    font-size: 17px;
+    background: #f4f4f4;
+    line-height: 1.5em;
+}
 
-.startbtnEl, .next-btn {
+header {
+    background: #333;
+    color:#fff;
+    padding: 20px;
+    border-bottom: 4px #000 solid;
+    margin-bottom: 10px;
+}
+
+h1, h2 {
+    width: 50%;
+    margin: auto;
+    padding:20px;
+    text-align: center;
+}
+
+#questionEl {
+    width: 90%;
+    margin:auto;
+    padding: 10px;
+}
+
+.next-btn {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 20px;
