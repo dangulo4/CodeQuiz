@@ -1,19 +1,19 @@
-
 *, *::before, *::after {
     box-sizing: border-box;
-    font-family: arial;
   }
 
 body {
+    background:  url(http://upload.wikimedia.org/wikipedia/commons/d/dd/Muybridge_race_horse_animated.gif) no-repeat center center fixed; 
+    background-size:contain;
+    height: 100%;
     font-size: 17px;
-    background: #f4f4f4;
     line-height: 1.5em;
 }
 
 header {
     background: #333;
     color:#fff;
-    padding: 20px;
+    padding: 3px;
     border-bottom: 4px #000 solid;
     margin-bottom: 10px;
 }
@@ -22,17 +22,66 @@ h1, h2 {
     width: 50%;
     margin: auto;
     padding:20px;
+    font-weight: bolder;
     text-align: center;
+   
 }
 
-#questionEl {
-    width: 90%;
-    margin:auto;
-    padding: 10px;
+h2 {
+    background-color:transparent;
+    color: #490a1f;
+    animation-name: instructions;
+    animation-duration: 18s;
+}
+    
+
+
+#question {
+    font-size: 25px;
+    font-weight: bolder;
+    color: #201a1a;
+    background-color: #fff;
+    width:50%
+}
+ 
+#startBtn {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    height: 40px;
+    width: 80px;
+    background-color: #9ea89e; 
+}
+      
+#startBtn:hover {
+    height: 60px;
+    width: 100px;
+    background-color: #614819; /* Green */
+    color: white;
 }
 
-.next-btn {
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 10px 20px;
+#nextBtn {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    height: 40px;
+    width: 80px;
+    background-color: #9ea89e; ; /* Green */
   }
+  
+  #nextBtn:hover {
+    height: 60px;
+    width: 100px;
+    background-color: #614819; /* Green */
+    color: white;
+  }
+
+
+@keyframes instructions {
+    from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0.0;
+        color:transparent;
+    }
+}
+

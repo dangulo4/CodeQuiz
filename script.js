@@ -2,9 +2,8 @@
 var body = document.body;
 
 // Create all the necessary elements
-var infoEl      = document.createElement('div');
-var linkEl      = document.createElement('a');  
-var timerEl     = document.createElement('p');
+var infoEl = $("<div>");
+var linkEl = $('<a>');
 var btnDiv     = document.createElement('div');
 var startBtnEl  = document.createElement('button');
 var questionContainer = document.createElement('div');
@@ -19,23 +18,15 @@ var answerButtonsElement = document.createElement('button');
 var instructionsEl = document.getElementById('instructions')
 
 //Store elements in variables
-linkEl.innerHTML    = 'View High Scores';
-timerEl.textContent = 'Time + 0';     
 startBtnEl.innerHTML = 'Start';
 
 //Append all elements
-body.appendChild(infoEl);
-infoEl.appendChild(linkEl);
-infoEl.appendChild(timerEl);
 body.appendChild(btnDiv);
 btnDiv.appendChild(startBtnEl);
 body.appendChild(btnDiv);
 btnDiv.appendChild(linebreak);
 
 //Style elements
-infoEl.setAttribute('style','margin:auto; width:100%; text-align:left;');
-linkEl.setAttribute('href','https://www.google.com');
-timerEl.setAttribute('style', 'margin:auto; width:100%; text-align:right;');
 btnDiv.setAttribute('style','margin:auto; width:100%; text-align:center;');
 startBtnEl.setAttribute('id', 'startBtn');
 btnDiv.setAttribute('style','margin:auto; width:100%; text-align:center;');
@@ -48,7 +39,8 @@ answerButtonsElement.setAttribute('class','btn;');
 
 startBtnEl.addEventListener('click', function() {
   document.getElementById("startBtn").style.display="none";
-  instructionsEl.style.diplay='none';
+  //instructionsEl.style.diplay='none';
+  $("#instructions").hide();
   startQuiz();
 });
 
@@ -78,6 +70,7 @@ function startQuiz() {
   function resetState() {
     clearStatusClass(document.body);
     nextBtnEl.style.display='none';
+    //Only display the answer for the respective question
     while(answerButtonsElement.firstChild) {
       answerButtonsElement.removeChild
       (answerButtonsElement.firstChild)
@@ -92,14 +85,15 @@ function startQuiz() {
     quizQuestions.answers.forEach(answer => {
       var button = document.createElement('button')
       button.innerText = answer.text
-      //button.classList.add('answer')
+      
         if (answer.correct) {
           button.dataset.correct = answer.correct
         }
       button.addEventListener('click', selectAnswer)
       body.appendChild(answerButtonsElement);
-      //answerButtonsElement.appendChild(answersEl);
+      answerButtonsElement.setAttribute('style', 'margin:auto; width:100%; border:transparent; padding:25px;text-align:center;');
       answerButtonsElement.appendChild(button);
+      
   })
   
     console.log(questionsEl.innerText);
@@ -117,11 +111,13 @@ function startQuiz() {
       nextBtnEl.style.display='block';
       nextBtnEl.setAttribute('style', 'margin:auto; text-align:center;');
   } else {
+    $("#instructions").show();
     startBtnEl.innerText = 'Restart';
     startBtnEl.style.display='block';
     startBtnEl.setAttribute('style', 'margin:auto; text-align:center;');
     }
   }
+
 
   function setStatusClass(element, correct) {
     clearStatusClass(element)
@@ -137,7 +133,7 @@ function startQuiz() {
   function clearStatusClass(element) {
     element.classList.remove('correct')
     element.classList.remove('wrong')
-  }
+   }
 // Question Object     
 var quizQuestions = [
   {
