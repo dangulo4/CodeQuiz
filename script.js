@@ -2,7 +2,7 @@
 var body = document.body;
 
 // Create all the necessary elements
-var infoEl = $("<div>");
+var infoEl = $('<div>');
 var linkEl = $('<a>');
 var btnDiv     = document.createElement('div');
 var startBtnEl  = document.createElement('button');
@@ -15,27 +15,38 @@ var shuffledQuestions;
 var currentQuestionIndex;
 var nextBtnEl = document.createElement('button');
 var answerButtonsElement = document.createElement('button');
-var instructionsEl = document.getElementById('instructions')
+var instructionsEl = document.getElementById('instructions');
+var scoreDiv = document.createElement('div');
+var quizScoreEl = document.createElement('p');
+var score = 0;
+
 
 //Store elements in variables
 startBtnEl.innerHTML = 'Start';
+// quizScoreEl.textContent = 'Score: '+ score;
 
 //Append all elements
 body.appendChild(btnDiv);
 btnDiv.appendChild(startBtnEl);
-body.appendChild(btnDiv);
+//body.appendChild(btnDiv);
 btnDiv.appendChild(linebreak);
+body.appendChild(scoreDiv);
+scoreDiv.appendChild(quizScoreEl);
+
+
 
 //Style elements
-btnDiv.setAttribute('style','margin:auto; width:100%; text-align:center;');
+btnDiv.setAttribute('style','margin:auto; width:50%; text-align:center;');
 startBtnEl.setAttribute('id', 'startBtn');
-btnDiv.setAttribute('style','margin:auto; width:100%; text-align:center;');
-questionsEl.setAttribute('id', 'question', 'style', 'margin:auto; width:100%; text-align:center;');
+btnDiv.setAttribute('style','margin:auto; width:50%; text-align:center;');
+questionsEl.setAttribute('id', 'question');
 questionsEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
-answersEl.setAttribute('id', 'answers', 'style', 'margin:auto; width:100%; text-align:center;');
-answersEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
-answerButtonsElement.setAttribute('class','btn;');     
-
+answersEl.setAttribute('id', 'answers');
+answersEl.setAttribute('style', 'margin:auto; width:50%; text-align:center;');
+answerButtonsElement.setAttribute('class','btn;');  
+answerButtonsElement.setAttribute('style','magin:auto; width:100%; text-align:center;');  
+scoreDiv.setAttribute('id','score','margin:auto; width:100; text-align:center;');  
+quizScoreEl.setAttribute('style', 'margin:10px; width:100%; text-align:center;');
 
 startBtnEl.addEventListener('click', function() {
   document.getElementById("startBtn").style.display="none";
@@ -43,6 +54,14 @@ startBtnEl.addEventListener('click', function() {
   $("#instructions").hide();
   startQuiz();
 });
+
+function startTimer() {
+  timerID = setInterval(function(){
+      seconds--;
+      if (seconds <= 0) gameOver();
+      secondsDisplay.textContent = seconds;
+  }, 1000);
+}
 
 nextBtnEl.addEventListener('click', function() {
   currentQuestionIndex++;
@@ -55,17 +74,7 @@ function startQuiz() {
   currentQuestionIndex = 0;
   setNextQuestion();
  }
-  function setNextQuestion() {
-    var nextBtnDiv = document.createElement('div');
-    body.appendChild(nextBtnDiv);
-    nextBtnDiv.appendChild(nextBtnEl);
-    nextBtnDiv.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
-    nextBtnEl.setAttribute('id', 'nextBtn');
-    nextBtnEl.innerHTML = 'Next';
-    
-    resetState();
-    showQuestions(shuffledQuestions[currentQuestionIndex]);
-  }
+  
 
   function resetState() {
     clearStatusClass(document.body);
@@ -91,46 +100,69 @@ function startQuiz() {
         }
       button.addEventListener('click', selectAnswer)
       body.appendChild(answerButtonsElement);
-      answerButtonsElement.setAttribute('style', 'margin:auto; width:100%; border:transparent; padding:25px;text-align:center;');
+      answerButtonsElement.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
       answerButtonsElement.appendChild(button);
-      
+      body.appendChild(scoreDiv);
+      scoreDiv.appendChild(quizScoreEl);
   })
   
     console.log(questionsEl.innerText);
     console.log(answerButtonsElement.innerText);
   }
  
+  function setNextQuestion() {
+    var nextBtnDiv = document.createElement('div');
+    body.appendChild(nextBtnDiv);
+    nextBtnDiv.appendChild(nextBtnEl);
+    nextBtnDiv.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
+    nextBtnEl.setAttribute('id', 'nextBtn');
+    nextBtnEl.innerHTML = 'Next';
+    resetState();
+    showQuestions(shuffledQuestions[currentQuestionIndex]);
+  }
+
   function selectAnswer(e) {
     var selectedButton = e.target
     var correct = selectedButton.dataset.correct
-    setStatusClass(document.body, correct)
+   // setStatusClass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
-      setStatusClass(button, button.dataset.correct)
+      //setStatusClass(button, button.dataset.correct)
       })
+      if (correct) {
+        //element.classList.add('correct');
+        score++;
+        console.log(score);
+        quizScoreEl.textContent = 'Score: '+ score;
+        } else {
+          //element.classList.add('wrong');
+          console.log('The wrong answer is selected');
+        }
+    
       if(shuffledQuestions.length > currentQuestionIndex +1) {
       nextBtnEl.style.display='block';
-      nextBtnEl.setAttribute('style', 'margin:auto; text-align:center;');
+      nextBtnEl.setAttribute('style', 'margin:auto; width:100px; text-align:center;');
   } else {
     $("#instructions").show();
     startBtnEl.innerText = 'Restart';
     startBtnEl.style.display='block';
-    startBtnEl.setAttribute('style', 'margin:auto; text-align:center;');
+    startBtnEl.setAttribute('style', 'margin:auto; width:100px; text-align:center;');
     }
   }
 
 
-  function setStatusClass(element, correct) {
-    clearStatusClass(element)
-    if (correct) {
-      element.classList.add('correct');
-      console.log('The answer is correct');
-      } else {
-        element.classList.add('wrong');
-        console.log('The wrong answer is selected');
-      }
-  }
+  // function setStatusClass(correct) {
+  //   //clearStatusClass(element)
+  //   if (correct) {
+  //     //element.classList.add('correct');
+  //     score++;
+  //     console.log(score);
+  //     } else {
+  //       //element.classList.add('wrong');
+  //       console.log('The wrong answer is selected');
+  //     }
+  // }
 
-  function clearStatusClass(element) {
+   function clearStatusClass(element) {
     element.classList.remove('correct')
     element.classList.remove('wrong')
    }
