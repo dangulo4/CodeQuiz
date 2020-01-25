@@ -20,6 +20,10 @@ var scoreDiv = document.createElement('div');
 var quizScoreEl = document.createElement('p');
 var score = 0;
 
+var totalSeconds = 0;
+var secondsElapsed = 0;
+var status = "Working";
+var interval;
 
 //Store elements in variables
 startBtnEl.innerHTML = 'Start';
@@ -36,13 +40,14 @@ scoreDiv.appendChild(quizScoreEl);
 
 
 //Style elements
-btnDiv.setAttribute('style','margin:auto; width:50%; text-align:center;');
+//body.setAttribute('style', '')
+btnDiv.setAttribute('style','btn-large; margin:auto; width:50%; text-align:center;');
 startBtnEl.setAttribute('id', 'startBtn');
-btnDiv.setAttribute('style','margin:auto; width:50%; text-align:center;');
+btnDiv.setAttribute('style','margin:auto; padding:10px; width:50%; text-align:center;');
 questionsEl.setAttribute('id', 'question');
-questionsEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
+questionsEl.setAttribute('style', 'width:100%; text-align:center;');
 answersEl.setAttribute('id', 'answers');
-answersEl.setAttribute('style', 'margin:auto; width:50%; text-align:center;');
+answersEl.setAttribute('style', 'width:100%; text-align:center;');
 answerButtonsElement.setAttribute('class','btn;');  
 answerButtonsElement.setAttribute('style','magin:auto; width:100%; text-align:center;');  
 scoreDiv.setAttribute('id','score','margin:auto; width:100; text-align:center;');  
@@ -55,13 +60,13 @@ startBtnEl.addEventListener('click', function() {
   startQuiz();
 });
 
-function startTimer() {
-  timerID = setInterval(function(){
-      seconds--;
-      if (seconds <= 0) gameOver();
-      secondsDisplay.textContent = seconds;
-  }, 1000);
-}
+// function startTimer() {
+//   timerID = setInterval(function(){
+//       totalSeconds--;
+//       if (totalSeconds <= 0) gameOver();
+//       secondsDisplay.textContent = seconds;
+//   }, 1000);
+// }
 
 nextBtnEl.addEventListener('click', function() {
   currentQuestionIndex++;
@@ -100,7 +105,7 @@ function startQuiz() {
         }
       button.addEventListener('click', selectAnswer)
       body.appendChild(answerButtonsElement);
-      answerButtonsElement.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
+      answerButtonsElement.setAttribute('id', 'answerBtn','style', 'margin:auto; text-align:center;');
       answerButtonsElement.appendChild(button);
       body.appendChild(scoreDiv);
       scoreDiv.appendChild(quizScoreEl);
@@ -132,7 +137,7 @@ function startQuiz() {
         //element.classList.add('correct');
         score++;
         console.log(score);
-        quizScoreEl.textContent = 'Score: '+ score;
+        quizScoreEl.textContent = 'Score: '+ score + ' /4';
         } else {
           //element.classList.add('wrong');
           console.log('The wrong answer is selected');
@@ -144,8 +149,8 @@ function startQuiz() {
   } else {
     $("#instructions").show();
     startBtnEl.innerText = 'Restart';
-    startBtnEl.style.display='block';
-    startBtnEl.setAttribute('style', 'margin:auto; width:100px; text-align:center;');
+    //startBtnEl.style.display='block';
+    startBtnEl.setAttribute('style', 'margin:auto; text-align:center;');
     }
   }
 

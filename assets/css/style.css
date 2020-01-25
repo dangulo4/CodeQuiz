@@ -4,10 +4,11 @@
 
 body {
     background:  url(http://upload.wikimedia.org/wikipedia/commons/d/dd/Muybridge_race_horse_animated.gif) no-repeat center center fixed; 
+    /* background-image: url('../images/bg.jpg')no-repeat center center fixed;  */
     background-size:contain;
     height: 100%;
     font-size: 17px;
-    line-height: 1.5em;
+    padding: 10%;
 }
 
 header {
@@ -28,59 +29,124 @@ h1, h2 {
 }
 
 h2 {
-    background-color:transparent;
-    color: #9b0b3b;
+    font-size: xx-large;
+    background-color:#fff;
+    color: #333;
     animation-name: instructions;
     animation-duration: 18s;
+    padding:5px;
 }
 
 #question {
-    padding: 10px;
-    font-size: 45px;
-    font-weight: bolder;
-    color: #12911d;
-    background-color: #fff;
+    background-color:#44c767;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:23px;
+	padding:16px 31px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+    padding-left: 50px;
     
 }
+
+#question:hover {
+	background-color:#5cbf2a;
+}
+
+#question:active {
+	position:relative;
+	top:1px;
+}
+
+button {
+    background-color:#44c767;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:23px;
+	padding:16px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+
+button:hover {
+	background-color:#5cbf2a;
+}
+
+button:active {
+	position:relative;
+	top:1px;
+}
+
+#answerBtn {
+    background:transparent;
+}
+
+/* .btn {
+	background-color:#44c767;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:23px;
+	padding:16px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+.btn:hover {
+	background-color:#5cbf2a;
+}
+.btn:active {
+	position:relative;
+	top:1px;
+} */
  
 #startBtn {
     -webkit-transition-duration: 0.4s; /* Safari */
+    border-radius:28px;
     transition-duration: 0.4s;
-    height: 40px;
-    width: 80px;
     background-color: #9ea89e; 
+    font-size:23px;
+	padding:16px 31px;
 }
       
 #startBtn:hover {
-    height: 60px;
-    width: 100px;
-    background-color: #614819; /* Green */
+    background-color:#5cbf2a;
     color: white;
 }
 
 #nextBtn {
     -webkit-transition-duration: 0.4s; /* Safari */
+    border-radius:28px;
     transition-duration: 0.4s;
-    height: 40px;
-    width: 80px;
-    background-color: #9ea89e; ; /* Green */
+    background-color: #9ea89e; ; 
+    font-size:23px;
+	padding:16px 31px;
   }
   
   #nextBtn:hover {
-    height: 60px;
-    width: 100px;
-    background-color: #614819; /* Green */
+    background-color:#5cbf2a;
     color: white;
   }
 
-/* .btn {
-    background: transparent;
+/* #btnDiv {
+    margin-top: 33%;
 } */
 
   #score {
-      color: #12911d;
-      font-size: 35px;
+      color: #9b0b3b;
+      font-size: 50px;
       font-weight: bolder;
+      line-height: 1.5em;
   }
 
 @keyframes instructions {
