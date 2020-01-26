@@ -149,6 +149,31 @@ button:active {
       line-height: 1.5em;
   }
 
+  #seconds {
+    background-color:#44c767;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:23px;
+	padding:16px 31px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+    margin: 50px;
+    margin-left: 40%;
+}
+
+#seconds:hover {
+	background-color:#5cbf2a;
+}
+
+#seconds:active {
+	position:relative;
+	top:1px;
+}
+
 @keyframes instructions {
     from {
         opacity: 1;

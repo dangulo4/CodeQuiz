@@ -19,6 +19,9 @@ var instructionsEl = document.getElementById('instructions');
 var scoreDiv = document.createElement('div');
 var quizScoreEl = document.createElement('p');
 var score = 0;
+var secondsDisplayDiv = document.createElement('div');
+var secondsDisplayEl = document.createElement('p');
+var secondsDisplay = 0;
 
 var totalSeconds = 0;
 var secondsElapsed = 0;
@@ -37,8 +40,6 @@ btnDiv.appendChild(linebreak);
 body.appendChild(scoreDiv);
 scoreDiv.appendChild(quizScoreEl);
 
-
-
 //Style elements
 //body.setAttribute('style', '')
 btnDiv.setAttribute('style','btn-large; margin:auto; width:50%; text-align:center;');
@@ -50,23 +51,30 @@ answersEl.setAttribute('id', 'answers');
 answersEl.setAttribute('style', 'width:100%; text-align:center;');
 answerButtonsElement.setAttribute('class','btn;');  
 answerButtonsElement.setAttribute('style','magin:auto; width:100%; text-align:center;');  
-scoreDiv.setAttribute('id','score','margin:auto; width:100; text-align:center;');  
-quizScoreEl.setAttribute('style', 'margin:10px; width:100%; text-align:center;');
+scoreDiv.setAttribute('id','score','margin:auto; width:100%; text-align:center;');  
+quizScoreEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
+secondsDisplayDiv.setAttribute('id','seconds','style', 'width:100%; text-align:center'); 
+secondsDisplayEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
 
 startBtnEl.addEventListener('click', function() {
   document.getElementById("startBtn").style.display="none";
   //instructionsEl.style.diplay='none';
   $("#instructions").hide();
   startQuiz();
+  startTimer();
 });
 
-// function startTimer() {
-//   timerID = setInterval(function(){
-//       totalSeconds--;
-//       if (totalSeconds <= 0) gameOver();
-//       secondsDisplay.textContent = seconds;
-//   }, 1000);
-// }
+function startTimer() {
+  timerID = setInterval(function(){
+      totalSeconds--;
+      if (totalSeconds <= 0) 
+          // gameOver();
+         body.appendChild(secondsDisplayDiv);
+      secondsDisplayDiv.appendChild(secondsDisplayEl);
+      secondsDisplayEl.textContent = 'Time Left: ' +totalSeconds;
+  }, 1000);
+  console.log(totalSeconds);
+}
 
 nextBtnEl.addEventListener('click', function() {
   currentQuestionIndex++;
@@ -109,7 +117,8 @@ function startQuiz() {
       answerButtonsElement.appendChild(button);
       body.appendChild(scoreDiv);
       scoreDiv.appendChild(quizScoreEl);
-  })
+     
+ })
   
     console.log(questionsEl.innerText);
     console.log(answerButtonsElement.innerText);
@@ -136,13 +145,16 @@ function startQuiz() {
       if (correct) {
         //element.classList.add('correct');
         score++;
+        alert('You have answered correct!, Keep it up!');
         console.log(score);
         quizScoreEl.textContent = 'Score: '+ score + ' /4';
         } else {
+          alert('You have answered incorrect, you will be deducted 10 seconds');
+          totalSeconds = totalSeconds - 10;
           //element.classList.add('wrong');
           console.log('The wrong answer is selected');
         }
-    
+        
       if(shuffledQuestions.length > currentQuestionIndex +1) {
       nextBtnEl.style.display='block';
       nextBtnEl.setAttribute('style', 'margin:auto; width:100px; text-align:center;');
@@ -152,6 +164,8 @@ function startQuiz() {
     //startBtnEl.style.display='block';
     startBtnEl.setAttribute('style', 'margin:auto; text-align:center;');
     }
+  
+    
   }
 
 
