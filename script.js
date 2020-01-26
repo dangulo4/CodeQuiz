@@ -53,8 +53,7 @@ answerButtonsElement.setAttribute('class','btn;');
 answerButtonsElement.setAttribute('style','magin:auto; width:100%; text-align:center;');  
 scoreDiv.setAttribute('id','score','margin:auto; width:100%; text-align:center;');  
 quizScoreEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
-secondsDisplayDiv.setAttribute('id','seconds','style', 'width:100%; text-align:center'); 
-secondsDisplayEl.setAttribute('style', 'margin:auto; width:100%; text-align:center;');
+
 
 startBtnEl.addEventListener('click', function() {
   document.getElementById("startBtn").style.display="none";
@@ -62,18 +61,26 @@ startBtnEl.addEventListener('click', function() {
   $("#instructions").hide();
   startQuiz();
   startTimer();
+secondsDisplayDiv.setAttribute('style', 'margin:auto; width:50%; text-align:center;');
+secondsDisplayEl.setAttribute('id', 'seconds');
 });
 
 function startTimer() {
   timerID = setInterval(function(){
       totalSeconds--;
-      if (totalSeconds <= 0) 
-          // gameOver();
+      if (totalSeconds <= -60) 
+          gameOver();
          body.appendChild(secondsDisplayDiv);
       secondsDisplayDiv.appendChild(secondsDisplayEl);
       secondsDisplayEl.textContent = 'Time Left: ' +totalSeconds;
   }, 1000);
   console.log(totalSeconds);
+}
+
+function gameOver() {
+  alert('Your time has expired! Click Restart to try again!');
+  totalSeconds = 0;
+  location.reload();  
 }
 
 nextBtnEl.addEventListener('click', function() {
@@ -119,9 +126,7 @@ function startQuiz() {
       scoreDiv.appendChild(quizScoreEl);
      
  })
-  
-    console.log(questionsEl.innerText);
-    console.log(answerButtonsElement.innerText);
+ 
   }
  
   function setNextQuestion() {
@@ -163,28 +168,15 @@ function startQuiz() {
     startBtnEl.innerText = 'Restart';
     //startBtnEl.style.display='block';
     startBtnEl.setAttribute('style', 'margin:auto; text-align:center;');
-    }
-  
+    }  
     
   }
-
-
-  // function setStatusClass(correct) {
-  //   //clearStatusClass(element)
-  //   if (correct) {
-  //     //element.classList.add('correct');
-  //     score++;
-  //     console.log(score);
-  //     } else {
-  //       //element.classList.add('wrong');
-  //       console.log('The wrong answer is selected');
-  //     }
-  // }
 
    function clearStatusClass(element) {
     element.classList.remove('correct')
     element.classList.remove('wrong')
    }
+
 // Question Object     
 var quizQuestions = [
   {
